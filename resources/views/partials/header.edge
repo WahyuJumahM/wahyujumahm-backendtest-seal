@@ -1,0 +1,23 @@
+<div class="header-wrapper">
+  <div class="notification_banner">
+    <p>
+      AdonisJS v6 is here. <a href="https://adonisjs.com/blog/adonisjs-v6-announcement" target="_blank">Learn more</a> in our release blog post.
+    </p>
+  </div>
+
+  <header class="header">
+    <div class="header-container">
+
+      <div class="primary-links">
+        @include('partials/hamburger')
+        @include('partials/logo')
+      </div>
+
+      @include('partials/desktop-main-nav')
+      <div class="right-section" >
+        @include('partials/dark-mode-toggler')
+        @include('partials/search')
+      </div>
+    </div>
+  </header>
+</div>
