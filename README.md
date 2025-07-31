@@ -55,7 +55,7 @@ psql --version    # PostgreSQL 12+
 
 ### 1. Clone Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/WahyuJumahM/wahyujumahm-backendtest-seal
 cd chatbot-api
 ```
 
