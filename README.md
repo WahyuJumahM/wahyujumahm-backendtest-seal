@@ -482,4 +482,4 @@ WHERE schemaname = 'public';
 
 **Happy Coding!** 🚀
 
-For more information, visit our [documentation](http://localhost:3333/api-docs) or contact the development team.
+For more information, visit my [LinkedIn](https://www.linkedin.com/in/wahyujumahm/)
