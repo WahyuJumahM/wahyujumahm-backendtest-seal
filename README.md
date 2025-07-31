@@ -1,151 +1,359 @@
-<div align="center">
-  <img src="https://res.cloudinary.com/adonisjs/image/upload/q_100/v1558612869/adonis-readme_zscycu.jpg" width="600px">
-</div>
+🤖 Chatbot API
+REST API sederhana menggunakan AdonisJS 5 dan PostgreSQL untuk sistem chatbot yang terintegrasi dengan API eksternal MajaDigiDev. API ini memungkinkan pengguna mengirimkan pertanyaan, menyimpan conversation, dan mengelola messages dengan dokumentasi lengkap menggunakan Swagger UI.
+🚀 Features
+•	✅ Chatbot Integration - Integrasi dengan API eksternal MajaDigiDev
+•	✅ Conversation Management - Kelola conversations dan messages
+•	✅ Session Management - UUID-based session tracking
+•	✅ Pagination & Filtering - Advanced search dan pagination
+•	✅ Basic Authentication - Keamanan untuk endpoint protected
+•	✅ Input Validation - Validasi menggunakan AdonisJS Validator
+•	✅ Database Migrations - PostgreSQL dengan Lucid ORM
+•	✅ Swagger Documentation - Interactive API documentation
+•	✅ Health Check - Monitoring endpoint
+•	✅ Error Handling - Comprehensive error responses
+•	✅ Transaction Support - Database transaction untuk data consistency
+🛠 Tech Stack
+Component	Technology
+Framework	AdonisJS 5
+Database	PostgreSQL
+ORM	Lucid ORM
+Validation	AdonisJS Validator
+HTTP Client	Axios
+Authentication	Basic Auth
+Documentation	Swagger UI + OpenAPI 3.0
+Language	TypeScript
+📋 Prerequisites
+Pastikan sistem Anda memiliki:
+•	Node.js v16+ (Download)
+•	PostgreSQL v12+ (Download)
+•	npm atau yarn
+•	Git
+Verifikasi instalasi:
+node --version    # v16.0.0+
+npm --version     # 8.0.0+
+psql --version    # PostgreSQL 12+
+🚀 Installation & Setup
+1. Clone Repository
+git clone <repository-url>
+cd chatbot-api
+2. Install Dependencies
+# Install semua dependencies
+npm install
 
-<br />
+# Atau menggunakan yarn
+yarn install
+3. Setup Database PostgreSQL
+Menggunakan PostgreSQL CLI:
+# Login ke PostgreSQL
+psql -U postgres
 
-<div align="center">
-  <h3>AdonisJS official documentation</h3>
-  <p>Source code and documentation for the official documentation website hosted on <a href="https://docs.adonisjs.com">docs.adonisjs.com</a></p>
-</div>
+# Buat database baru
+CREATE DATABASE chatbot_db;
 
-## Setup
-Follow the below mentioned steps to setup the project on your local.
+# Buat user baru (opsional)
+CREATE USER chatbot_user WITH PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE chatbot_db TO chatbot_user;
 
-- Fork the repo
-- Pull the repo on your local
-- Install all dependencies using `npm install`.
-- Start the AdonisJS development server using `node ace serve --watch`
+# Exit
+\q
+Menggunakan pgAdmin:
+1.	Buka pgAdmin
+2.	Connect ke PostgreSQL server
+3.	Klik kanan pada "Databases" → "Create" → "Database"
+4.	Nama database: chatbot_db
+5.	Save
+4. Environment Configuration
+# Copy file environment
+cp .env.example .env
 
-**We do not follow any build process for rendering markdown to HTML**. Instead, we compile markdown files on every page request. This ensures, we do not have to run any background compilers to compile markdown and then re-compile everything on a single change. The process is as simple as
-
-```
---> New HTTP request --> Finding markdown file for the url --> Compile and serve it
-```
-
-## Environment variables
-
-Following environment variables are required to start the development server or create the production build.
-
-```
+# Generate APP_KEY
+node ace generate:key
+Edit file .env dengan konfigurasi Anda:
+# Server Configuration
 PORT=3333
 HOST=0.0.0.0
 NODE_ENV=development
-APP_KEY=iPbHJ0Wdr8_hA4DLTj83lKedQP9I5rJO
+APP_KEY=your-generated-app-key-here
+DRIVE_DISK=local
+SESSION_DRIVER=cookie
 CACHE_VIEWS=false
-DEBUG_DOCS=true
-ALGOLIA_API_KEY=
-COPY_REDIRECTS_FILE=false
-REPOSITORY_URL=https://github.com/adonisjs/docs.adonisjs.com
-```
 
-The `ALGOLIA_API_KEY` environment variable is optional and required only if you want to enable search.
+# Database Configuration
+DB_CONNECTION=pg
+PG_HOST=localhost
+PG_PORT=5432
+PG_USER=postgres
+PG_PASSWORD=your_database_password
+PG_DB_NAME=chatbot_db
 
-If you are deploying a translated version of the docs, then set the `COPY_REDIRECTS_FILE=false`. Since the redirects file is applicable only for the official documentation to avoid breaking the `preview.adonisjs.com` URLs.
+# External API Configuration
+EXTERNAL_API_URL=https://api.majadigidev.jatimprov.go.id/api/external/chatbot/send-message
 
-## Content structure
+# Basic Authentication (untuk endpoint protected)
+API_USERNAME=admin
+API_PASSWORD=password123
+5. Database Setup
+# Install dan configure Lucid (jika belum)
+node ace configure @adonisjs/lucid
 
-The markdown content is saved inside the `content` directory and each documentation type (we call them zones) has its own subfolder. 
+# Install dan configure Validator
+node ace configure @adonisjs/validator
 
-The navigation for the website header and the sidebar is driven by the `menu.json` file inside each zone's subdirectory.
+# Jalankan migrations
+node ace migration:run
 
-```
-content
-├── cookbooks
-│   ├── menu.json
-├── guides
-│   ├── menu.json
-├── reference
-│   └── menu.json
-└── releases
-    ├── menu.json
-```
+# Cek status migrations
+node ace migration:status
+6. Start Development Server
+# Development mode dengan auto-reload
+npm run dev
 
-The `menu.json` file has the following structure
+# Atau
+node ace serve --watch
+Server akan berjalan di: http://localhost:3333
+7. Verifikasi Installation
+# Test health endpoint
+curl http://localhost:3333/health
 
-```json
+# Test API info
+curl http://localhost:3333/
+
+# Akses Swagger documentation
+# Buka browser: http://localhost:3333/api-docs
+📚 API Documentation
+🌐 Access Points
+Endpoint	Description
+http://localhost:3333	API Information
+http://localhost:3333/api-docs	Swagger UI Documentation
+http://localhost:3333/health	Health Check
+🔐 Authentication
+Endpoint yang memerlukan authentication menggunakan Basic Auth:
+# Format header
+Authorization: Basic <base64(username:password)>
+
+# Default credentials (dari .env)
+Username: admin
+Password: password123
+
+# Generate base64 encoding
+echo -n "admin:password123" | base64
+# Output: YWRtaW46cGFzc3dvcmQxMjM=
+📝 API Endpoints
+🔓 Public Endpoints
+POST /questions
+Kirim pertanyaan ke chatbot
+Request:
+curl -X POST "http://localhost:3333/questions" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "question": "Apa itu artificial intelligence?",
+       "session_id": "550e8400-e29b-41d4-a716-446655440000"
+	"additional_information": ""
+     }'
+Response:
 {
-  "name": "Database",
-  "categories": [
-    {
-      "name": "root",
-      "docs": [
-        {
-          "title": "Connection",
-          "permalink": "database/connection",
-          "contentPath": "database/connection.md",
-        }
-      ]
-    }
-  ]
+  "success": true,
+  "data": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "conversation_id": 1,
+    "user_message": "Apa itu artificial intelligence?",
+    "bot_response": "Artificial Intelligence adalah teknologi...",
+    "timestamp": "2024-01-15T10:30:00.000Z"
+  }
 }
-```
+🔒 Protected Endpoints (Require Auth)
+GET /conversations
+Ambil semua conversations dengan pagination
+Request:
+curl -X GET "http://localhost:3333/conversations?page=1&limit=10&search=AI" \
+     -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM="
+Query Parameters:
+•	page: Nomor halaman (default: 1)
+•	limit: Jumlah data per halaman (default: 10)
+•	search: Pencarian berdasarkan session_id atau last_message
+•	sort_by: Field untuk sorting (default: created_at)
+•	sort_order: asc atau desc (default: desc)
+GET /conversations/{id}
+Ambil messages dari conversation tertentu
+Request:
+# Menggunakan conversation ID
+curl -X GET "http://localhost:3333/conversations/1" \
+     -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM="
 
-- The top level object is the group name. You can have one or more groups inside a zone and they will be listed in a dropdown in the header nav.
-- If there is no only one group. You can name it as `root`.
-- Each group can have one or more `categories`. The categories are listed inside the sidebar.
-- The category with name `root` will not be printed in the HTML.
-- Each category can have one or more `docs`.
-- The docs further have a `title`, `permalink` and the path to the content file. **The path is relative from the zone root.**
+# Menggunakan session ID (UUID)
+curl -X GET "http://localhost:3333/conversations/550e8400-e29b-41d4-a716-446655440000" \
+     -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM="
+DELETE /conversations/{id}
+Hapus conversation dan semua messages terkait
+Request:
+curl -X DELETE "http://localhost:3333/conversations/1" \
+     -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM="
+DELETE /messages/{id}
+Hapus message tertentu
+Request:
+curl -X DELETE "http://localhost:3333/messages/1" \
+     -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM="
+📁 Project Structure
+chatbot-api/
+├── app/
+│   ├── Controllers/
+│   │   └── Http/
+│   │       └── ChatbotController.ts     # Main API controller
+│   ├── Middleware/
+│   │   └── BasicAuth.ts                 # Authentication middleware
+│   ├── Models/
+│   │   ├── Conversation.ts              # Conversation model
+│   │   └── Message.ts                   # Message model
+│   ├── Services/
+│   │   └── ChatbotService.ts            # External API service
+│   └── Validators/
+│       └── QuestionValidator.ts         # Input validation
+├── config/
+│   ├── database.ts                      # Database configuration
+│   └── swagger.ts                       # Swagger documentation config
+├── database/
+│   └── migrations/
+│       ├── 001_conversations.ts         # Conversation table migration
+│       └── 002_messages.ts              # Messages table migration
+├── start/
+│   ├── kernel.ts                        # Middleware registration
+│   └── routes.ts                        # API routes definition
+├── .env                                 # Environment variables
+├── package.json                         # Dependencies
+└── README.md                            # Documentation
+🗃 Database Schema
+Conversations Table
+CREATE TABLE conversations (
+  id SERIAL PRIMARY KEY,
+  session_id UUID UNIQUE NOT NULL,
+  last_message TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+Messages Table
+CREATE TABLE messages (
+  id SERIAL PRIMARY KEY,
+  conversation_id INTEGER REFERENCES conversations(id) ON DELETE CASCADE,
+  sender_type VARCHAR(10) CHECK (sender_type IN ('user', 'bot')),
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+🚧 Development Commands
+# Development server dengan auto-reload
+npm run dev
 
-## Rendering HTML
+# Database orm dependecies
+npm install @adonisjs/lucid@^18.4.0
 
-We make use of a self written [@dimerapp/content](https://npm.im/@dimerapp/content) module to render markdown to HTML using Edge templates in the middle.
+# Configure dependecies
+node ace configure @adonisjs/lucid
 
-We begin by first converting Markdown to an AST and then render each node of the AST using Edge templates. This allow to spit custom markup. Checkout the [./resources/views/elements](./resources/views/elements) directory to see how we are using it.
+# Jalankan migrations
+node ace migration:run
 
-The code blocks are rendered using the [shiki](https://github.com/shikijs/shiki). The module uses VsCode grammar and themes to process the code blocks. Also, code blocks are processed on the backend and the client receives formatted HTML.
+# Check migration status
+node ace migration:status
 
+🔧 Configuration (Default)
+Environment Variables
+Variable	Description	Default	Required
+PORT	Server port	3333	No
+HOST	Server host	0.0.0.0	No
+NODE_ENV	Environment	development	No
+APP_KEY	Application key	-	Yes
+DB_CONNECTION	Database type	pg	Yes
+PG_HOST	PostgreSQL host	localhost	Yes
+PG_PORT	PostgreSQL port	5432	Yes
+PG_USER	Database user	postgres	Yes
+PG_PASSWORD	Database password	-	Yes
+PG_DB_NAME	Database name	chatbot_db	Yes
+EXTERNAL_API_URL	MajaDigiDev API URL	-	Yes
+API_USERNAME	Basic auth username	admin	No
+API_PASSWORD	Basic auth password	password123	No
+Database Connection Test
+# Test koneksi PostgreSQL
+psql -h localhost -p 5432 -U postgres -d chatbot_db -c "SELECT NOW();"
 
-## Configuring `@dimerapp/content`
+# Test dari aplikasi
+node -e "
+const { Client } = require('pg');
+const client = new Client({
+  host: 'localhost',
+  port: 5432,
+  user: 'postgres',
+  password: 'your_password',
+  database: 'chatbot_db'
+});
+client.connect().then(() => {
+  console.log('✅ Database connected successfully');
+  client.end();
+}).catch(err => {
+  console.error('❌ Database connection failed:', err);
+});
+"
+🐛 Troubleshooting
+Common Issues
+1. Database Connection Error
+Error: connect ECONNREFUSED 127.0.0.1:5432
+Solution:
+•	Pastikan PostgreSQL service berjalan
+•	Cek kredensial database di .env
+•	Verifikasi database chatbot_db sudah dibuat
+# Start PostgreSQL service
+# Ubuntu/Debian:
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
 
-The `@dimerapp/content` module does not come with any CLI or opinions on how the content should be structured. 
+# macOS (Homebrew):
+brew services start postgresql
 
-So we have to self configure `@dimerapp/content` module. This is done inside the `start/content.ts` file, which relies on the `config/markdown.ts` file.
+# Windows:
+# Start melalui Services atau PostgreSQL installer
+2. Migration Failed
+Error: relation "conversations" does not exist
+Solution:
+# Reset migrations
+node ace migration:rollback --batch=0
+node ace migration:run
+3. External API Timeout
+Error: External API is not responding
+Solution:
+•	Cek koneksi internet
+•	Verifikasi URL API eksternal di .env
+•	Test API eksternal manual:
+curl -X POST "https://api.majadigidev.jatimprov.go.id/api/external/chatbot/send-message" \
+     -H "Content-Type: application/json" \
+     -d '{"message": "test", "session_id": "test-123"}'
+4. Port Already in Use
+Error: Port 3333 is already in use
+Solution:
+# Ubah port di .env
+PORT=3334
 
+# Atau kill process yang menggunakan port
+lsof -ti:3333 | xargs kill -9
+📊 Monitoring & Logging
+Health Check
+# Simple health check
+curl http://localhost:3333/health
 
-## CSS and frontend JavaScript
+# Response
+{
+  "status": "ok",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "uptime": 12345.67
+}
+Database Monitoring
+-- Active connections
+SELECT * FROM pg_stat_activity WHERE datname = 'chatbot_db';
 
-The styles are written in Vanilla CSS and stored inside the `./resources/css` directory. To organize things a bit, we have split them inside multiple `.css` files.
-
-We also make use of Alpine.js for adding small interactive components, like the header nav dropdown and the codegroup toggle.
-
-The `@hotwire/turbo` is used to navigate between pages without doing a complete refresh.
-
-### Custom JS Hacks
-
-Re-rendering HTML pages resets the scroll position of the sidebar, which is kind of annoying. So we make use of turbo  events `turbo:before-render` and `turbo:render` to store the sidebar position and then restore it after navigation.
-
-On first page visit, we scroll the active sidebar item into the view using the `scrollIntoView` method.
-
-## Deployment
-
-Run the following command to create the production build. 
-
-```
-npm run build
-```
-
-The output is written to the `public` directory and you can deploy it on any host capable of serving static files.
-
-The official website is hosted on [pages.cloudflare.com](https://pages.cloudflare.com/)
-
-### Important environment variables
-
-The `ALGOLIA_API_KEY` environment variable is optional and required only if you want to enable search.
-
-If you are deploying a translated version of the docs, then set the `COPY_REDIRECTS_FILE=false`. Since the redirects file is applicable only for the official documentation to avoid breaking the `preview.adonisjs.com` URLs.
-
-## Translating docs to different languages
-
-You are free to fork this repo and translate docs to different languages and publish them on a separate subdomain.
-
-> Disclaimer: The translated documentation is considered a community effort. The website and translations are/will never be supported or maintained by the core team.
-
-### Process for translating docs
-
-- Notify everyone about the translated docs on this [pinned issue](https://github.com/adonisjs/docs.adonisjs.com/issues/1).
-- We can issue you a subdomain for the language once you have translated more than 50% of the docs.
-- As the documentation is updated on the official website, we will drop a link to the PR on the [pinned issue](https://github.com/adonisjs/docs.adonisjs.com/issues/1) and you can pull back those changes.
-- We recommend not localizing the URLs. Just translate the docs content.
-- Feel free to send a PR to Algolia for indexing the translated website. Here is a [reference to algolia config](https://github.com/algolia/docsearch-configs/blob/master/configs/adonisjs_next.json) for the official website.
+-- Table sizes
+SELECT 
+    schemaname,
+    tablename,
+    pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size
+FROM pg_tables 
+WHERE schemaname = 'public';
+________________________________________
+Happy Coding! 🚀
