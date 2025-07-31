@@ -4,7 +4,7 @@
 [![AdonisJS](https://img.shields.io/badge/AdonisJS-5-purple.svg)](https://adonisjs.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue.svg)](https://postgresql.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4+-blue.svg)](https://typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 
 REST API sederhana menggunakan AdonisJS 5 dan PostgreSQL untuk sistem chatbot yang terintegrasi dengan API eksternal MajaDigiDev. API ini memungkinkan pengguna mengirimkan pertanyaan, menyimpan conversation, dan mengelola messages dengan dokumentasi lengkap menggunakan Swagger UI.
 
